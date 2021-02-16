@@ -31,7 +31,7 @@ class LabConclusionHandlerImpl : LabConclusionHandler {
 
     override fun processLabConclusion(labConclusion: LabConclusion): LabConclusionResponse {
         labConclusion.uid = initializeUidIfBlank()
-        processConclusionByObjectType(labConclusion.conclusionObject)
+        processConclusionByObjectType(labConclusion)
         labRepository.save(labConclusion)
 
         return mapper.fromModelToDTO(labConclusion)
@@ -43,12 +43,13 @@ class LabConclusionHandlerImpl : LabConclusionHandler {
         return processLabConclusion(labConclusion)
     }
 
-    private fun processConclusionByObjectType(conclusionObject: LabConclusionObject) =
-    when (conclusionObject) {
+    private fun processConclusionByObjectType(labConclusion: LabConclusion) =
+    when (labConclusion.conclusionObject) {
         is LabConclusionObject.JointTubeLinePart -> {
-            for (zone: JointTubeZone in conclusionObject.zones) {
-                conclusionObject.isGood = validator.defectsValidate(conclusionObject.wallThickness, zone)
+            for (zone: JointTubeZone in labConclusion.conclusionObject.zones) {
+                labConclusion.conclusionObject.isGood = validator.defectsValidate(labConclusion.conclusionObject.wallThickness, zone)
                 zone.conclusionCode = recordCompiler.compile(zone)
+                if(!labConclusion.conclusionObject.isGood) labConclusion.isGood = false
             }
         }
     }

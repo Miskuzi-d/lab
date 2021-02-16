@@ -15,7 +15,7 @@ data class JointTubeDefect (
     val descriptionDefectedFlows: String,
     val comment: String,
     @JsonIgnore
-    var isGood: Boolean = false,
+    var isGood: Boolean = true,
     @JsonIgnore
     var widthPermit: PermitStatus = PermitStatus.NOT_VERIFIED,
     @JsonIgnore

@@ -17,7 +17,7 @@ class LabConclusion(
     val type: JointTubeConclusionType,
     val data: String,
     val signers: Signers,
-    val isGood: Boolean,
+    var isGood: Boolean = true,
     val conclusionObject: LabConclusionObject,
     val processUnit: String,
     val technologicalDocument: String,
