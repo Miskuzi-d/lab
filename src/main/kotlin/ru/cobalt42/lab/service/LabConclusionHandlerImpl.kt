@@ -30,37 +30,30 @@ class LabConclusionHandlerImpl : LabConclusionHandler {
     private lateinit var labRepository: LabRepository
 
     override fun processLabConclusion(labConclusion: LabConclusion): LabConclusionResponse {
-        labConclusion.uid = initializeUidIfBlank(labConclusion.uid)
+        labConclusion.uid = initializeUidIfBlank()
         processConclusionByObjectType(labConclusion.conclusionObject)
         labRepository.save(labConclusion)
 
         return mapper.fromModelToDTO(labConclusion)
     }
 
-    override fun updateLabConclusion(labConclusion: LabConclusion): LabConclusionResponse {
-        val old: LabConclusion = labRepository.findByUid(labConclusion.uid)
+    override fun updateLabConclusion(uid: String, labConclusion: LabConclusion): LabConclusionResponse {
+        val old: LabConclusion = labRepository.findByUid(uid)
         labConclusion._id = old._id
         return processLabConclusion(labConclusion)
     }
 
-    private fun processConclusionByObjectType(conclusionObject: LabConclusionObject)
-    = when (conclusionObject) {
-
+    private fun processConclusionByObjectType(conclusionObject: LabConclusionObject) =
+    when (conclusionObject) {
         is LabConclusionObject.JointTubeLinePart -> {
-            for (zone : JointTubeZone in conclusionObject.zones) {
+            for (zone: JointTubeZone in conclusionObject.zones) {
                 conclusionObject.isGood = validator.defectsValidate(conclusionObject.wallThickness, zone)
                 zone.conclusionCode = recordCompiler.compile(zone)
             }
         }
-
     }
 
-    private fun initializeUidIfBlank(uid: String): String {
-        if (uid.isBlank()) {
-            return UUID.randomUUID().toString()
-        }
-        return uid
-    }
+    private fun initializeUidIfBlank(): String = UUID.randomUUID().toString()
 
     override fun findByUid(uid: String): LabConclusionResponse {
         return mapper.fromModelToDTO(labRepository.findByUid(uid))

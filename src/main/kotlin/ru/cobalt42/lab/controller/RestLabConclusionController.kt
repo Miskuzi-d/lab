@@ -21,8 +21,8 @@ class RestLabConclusionController {
         labConclusionHandler.processLabConclusion(labRequest)
 
     @PostMapping("/conclusion/{uid}")
-    fun updateLabConclusion(@RequestBody labRequest: LabConclusion): LabConclusionResponse =
-        labConclusionHandler.updateLabConclusion(labRequest)
+    fun updateLabConclusion(@PathVariable ("uid") uid: String,@RequestBody labRequest: LabConclusion): LabConclusionResponse =
+        labConclusionHandler.updateLabConclusion(uid, labRequest)
 
     @GetMapping("/conclusion/{uid}")
     fun getLabConclusionByUid(@PathVariable uid: String) : LabConclusionResponse = labConclusionHandler.findByUid(uid)

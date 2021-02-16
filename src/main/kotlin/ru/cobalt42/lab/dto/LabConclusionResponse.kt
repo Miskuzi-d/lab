@@ -2,7 +2,7 @@ package ru.cobalt42.lab.dto
 
 import ru.cobalt42.lab.model.LabConclusionObject
 import ru.cobalt42.lab.model.jointtubelinepart.JointTubeConclusionType
-import ru.cobalt42.lab.model.Signer
+import ru.cobalt42.lab.model.Signers
 import ru.cobalt42.lab.model.jointtubelinepart.TargetTypeClass
 
 data class LabConclusionResponse (
@@ -11,7 +11,7 @@ data class LabConclusionResponse (
     val target: TargetTypeClass,
     val type: JointTubeConclusionType,
     val data: String,
-    val signer: Signer,
+    val signers: Signers,
     val isGood: Boolean,
     val conclusionObject: LabConclusionObject,
     val processUnit: String,

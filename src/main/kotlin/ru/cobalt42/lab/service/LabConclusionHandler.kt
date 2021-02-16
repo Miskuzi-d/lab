@@ -8,7 +8,7 @@ interface LabConclusionHandler {
 
     fun processLabConclusion(labConclusion: LabConclusion) : LabConclusionResponse
 
-    fun updateLabConclusion(labConclusion: LabConclusion) : LabConclusionResponse
+    fun updateLabConclusion(uid: String, labConclusion: LabConclusion) : LabConclusionResponse
 
     fun findByUid(uid: String): LabConclusionResponse
 

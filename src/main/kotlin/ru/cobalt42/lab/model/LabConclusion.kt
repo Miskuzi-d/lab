@@ -13,12 +13,12 @@ class LabConclusion(
 
     @Id
     var _id: ObjectId = ObjectId.get(),
-    var uid: String,
+    var uid: String?,
     val name: String,
     val target: TargetTypeClass,
     val type: JointTubeConclusionType,
     val data: String,
-    val signer: Signer,
+    val signers: Signers,
     val isGood: Boolean,
     val conclusionObject: LabConclusionObject,
     val processUnit: String,

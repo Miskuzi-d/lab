@@ -11,12 +11,12 @@ class LabConclusionMapper {
 
     fun fromModelToDTO(labConclusion: LabConclusion) : LabConclusionResponse {
         return LabConclusionResponse(
-            labConclusion.uid,
+            labConclusion.uid!!,
             labConclusion.name,
             labConclusion.target,
             labConclusion.type,
             labConclusion.data,
-            labConclusion.signer,
+            labConclusion.signers,
             labConclusion.isGood,
             labConclusion.conclusionObject,
             labConclusion.processUnit,
