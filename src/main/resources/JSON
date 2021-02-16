@@ -1,0 +1,43 @@
+{ // LabConclusion
+  _id: ObjectId = ObjectId.get(),
+  uid: String,
+  name: String,
+  type:{ //JointTubeConclusionType
+      name: String,
+      id: Int
+    }
+    vardate: String,
+    labChiefUid: String,
+    defectoscopistUid: String,
+    conclusionObject: { //LabConclusionObject
+        lThickness: Double,
+        diameter: Double,
+        zones: { //List<JointTubeZone>
+          {
+            name: String,
+            defectList: { //List<JointTubeDefect>
+              {
+                defectType: RkDefectType, //ENUM
+                defectClass: RkDefectClass, //ENUM // ValueLimit
+                width : Double = 0.0,
+                length: Double = 0.0,
+                isAccumulation: Boolean,
+                isGood: Boolean,
+                widthPermit: PermitStatus = PermitStatus.NOT_VERIFIED,
+                lengthPermit: PermitStatus = PermitStatus.NOT_VERIFIED,
+                sumLengthPermit: PermitStatus = PermitStatus.NOT_VERIFIED
+              }
+              {
+                .......
+              }
+            }
+            sumLength: Double = 0.0,
+            conclusionCode: String = ""
+          }
+          {
+            ......
+          }
+      }
+    isGood: Boolean
+    }
+}

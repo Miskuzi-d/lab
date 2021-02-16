@@ -1,0 +1,117 @@
+package ru.cobalt42.lab.model.jointtubelinepart.rk
+
+import java.util.*
+
+enum class RkDefectClass(val limitMap : SortedMap<Double, ValueLimit>) {
+
+    CLASS1(sortedMapOf(
+        3.0 to ValueLimit(0.2, 0.2, 2.0),
+        5.0 to ValueLimit(0.3, 0.3, 3.0),
+        8.0 to ValueLimit(0.4, 0.4, 4.0),
+        11.0 to ValueLimit(0.5, 0.5, 5.0),
+        14.0 to ValueLimit(0.6, 0.6, 6.0),
+        20.0 to ValueLimit(0.8, 0.8, 8.0),
+        26.0 to ValueLimit(1.0, 1.0, 10.0),
+        34.0 to ValueLimit(1.2, 1.2, 12.0),
+        45.0 to ValueLimit(1.5, 1.5, 15.0),
+        67.0 to ValueLimit(2.0, 2.0, 20.0),
+        90.0 to ValueLimit(2.5, 2.5, 25.0),
+        120.0 to ValueLimit(3.0, 3.0, 30.0),
+        200.0 to ValueLimit(4.0, 4.0, 40.0),
+        400.0 to ValueLimit(5.0, 5.0, 50.0)
+    )),
+    CLASS2(sortedMapOf(
+        3.0 to ValueLimit(0.3, 0.6, 3.0),
+        5.0 to ValueLimit(0.4, 0.8, 4.0),
+        8.0 to ValueLimit(0.5, 1.0, 5.0),
+        11.0 to ValueLimit(0.6, 1.2, 6.0),
+        14.0 to ValueLimit(0.8, 1.5, 8.0),
+        20.0 to ValueLimit(1.0, 2.0, 10.0),
+        26.0 to ValueLimit(1.2, 2.5, 12.0),
+        34.0 to ValueLimit(1.5, 3.0, 15.0),
+        45.0 to ValueLimit(2.0, 4.0, 20.0),
+        67.0 to ValueLimit(2.5, 5.0, 25.0),
+        90.0 to ValueLimit(3.0, 6.0, 30.0),
+        120.0 to ValueLimit(4.0, 8.0, 40.0),
+        200.0 to ValueLimit(5.0, 10.0, 50.0),
+        400.0 to ValueLimit(5.0, 10.0, 60.0)
+    )),
+    CLASS3(sortedMapOf(
+        3.0 to ValueLimit(0.4, 1.2, 4.0),
+        5.0 to ValueLimit(0.5, 1.5, 5.0),
+        8.0 to ValueLimit(0.6, 2.0, 6.0),
+        11.0 to ValueLimit(0.8, 2.5, 8.0),
+        14.0 to ValueLimit(1.0, 3.0, 10.0),
+        20.0 to ValueLimit(1.2, 3.5, 12.0),
+        26.0 to ValueLimit(1.5, 5.0, 15.0),
+        34.0 to ValueLimit(2.0, 6.0, 20.0),
+        45.0 to ValueLimit(2.5, 8.0, 25.0),
+        67.0 to ValueLimit(3.0, 9.0, 30.0),
+        90.0 to ValueLimit(4.0, 10.0, 40.0),
+        120.0 to ValueLimit(5.0, 10.0, 50.0),
+        200.0 to ValueLimit(5.0, 10.0, 60.0),
+        400.0 to ValueLimit(5.0, 10.0, 70.0)
+    )),
+    CLASS4(sortedMapOf(
+        3.0 to ValueLimit(0.5, 1.5, 5.0),
+        5.0 to ValueLimit(0.6, 2.0, 6.0),
+        8.0 to ValueLimit(0.8, 2.5, 8.0),
+        11.0 to ValueLimit(1.0, 3.0, 10.0),
+        14.0 to ValueLimit(1.2, 3.5, 12.0),
+        20.0 to ValueLimit(1.5, 5.0, 15.0),
+        26.0 to ValueLimit(2.0, 6.0, 20.0),
+        34.0 to ValueLimit(2.5, 8.0, 25.0),
+        45.0 to ValueLimit(3.0, 9.0, 30.0),
+        67.0 to ValueLimit(4.0, 12.0, 40.0),
+        90.0 to ValueLimit(5.0, 12.0, 50.0),
+        120.0 to ValueLimit(5.0, 12.0, 60.0),
+        200.0 to ValueLimit(5.0, 12.0, 70.0),
+        400.0 to ValueLimit(5.0, 12.0, 80.0)
+    )),
+    CLASS5(sortedMapOf(
+        3.0 to ValueLimit(0.6, 2.0, 6.0),
+        5.0 to ValueLimit(0.8, 2.5, 8.0),
+        8.0 to ValueLimit(1.0, 3.0, 10.0),
+        11.0 to ValueLimit(1.2, 3.5, 12.0),
+        14.0 to ValueLimit(1.5, 5.0, 15.0),
+        20.0 to ValueLimit(2.0, 6.0, 20.0),
+        26.0 to ValueLimit(2.5, 8.0, 25.0),
+        34.0 to ValueLimit(3.0, 10.0, 30.0),
+        45.0 to ValueLimit(4.0, 12.0, 40.0),
+        67.0 to ValueLimit(5.0, 15.0, 50.0),
+        90.0 to ValueLimit(5.0, 15.0, 60.0),
+        120.0 to ValueLimit(5.0, 15.0, 70.0),
+        200.0 to ValueLimit(5.0, 15.0, 80.0),
+        400.0 to ValueLimit(5.0, 15.0, 90.0)
+    )),
+    CLASS6(sortedMapOf(
+        3.0 to ValueLimit(0.8, 3.0, 8.0),
+        5.0 to ValueLimit(1.0, 4.0, 10.0),
+        8.0 to ValueLimit(1.2, 5.0, 12.0),
+        11.0 to ValueLimit(1.5, 6.0, 15.0),
+        14.0 to ValueLimit(2.0, 8.0, 20.0),
+        20.0 to ValueLimit(2.5, 10.0, 25.0),
+        26.0 to ValueLimit(3.0, 12.0, 30.0),
+        34.0 to ValueLimit(4.0, 15.0, 40.0),
+        45.0 to ValueLimit(5.0, 20.0, 50.0),
+        67.0 to ValueLimit(5.0, 20.0, 60.0),
+        90.0 to ValueLimit(5.0, 20.0, 70.0),
+        120.0 to ValueLimit(5.0, 20.0, 80.0),
+        200.0 to ValueLimit(5.0, 20.0, 90.0)
+    )),
+    CLASS7(sortedMapOf(
+        3.0 to ValueLimit(0.8, 3.0, 8.0),
+        5.0 to ValueLimit(1.0, 4.0, 10.0),
+        8.0 to ValueLimit(1.2, 5.0, 12.0),
+        11.0 to ValueLimit(1.5, 6.0, 15.0),
+        14.0 to ValueLimit(2.0, 8.0, 20.0),
+        20.0 to ValueLimit(2.5, 10.0, 25.0),
+        26.0 to ValueLimit(3.0, 12.0, 30.0),
+        34.0 to ValueLimit(4.0, 15.0, 40.0),
+        45.0 to ValueLimit(5.0, 20.0, 50.0),
+        67.0 to ValueLimit(5.0, 20.0, 60.0),
+        90.0 to ValueLimit(5.0, 20.0, 70.0),
+        120.0 to ValueLimit(5.0, 20.0, 80.0),
+        200.0 to ValueLimit(5.0, 20.0, 90.0)
+    ))
+}
