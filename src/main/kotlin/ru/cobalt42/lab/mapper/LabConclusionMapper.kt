@@ -13,7 +13,6 @@ class LabConclusionMapper {
         return LabConclusionResponse(
             labConclusion.uid!!,
             labConclusion.name,
-            labConclusion.target,
             labConclusion.type,
             labConclusion.data,
             labConclusion.signers,

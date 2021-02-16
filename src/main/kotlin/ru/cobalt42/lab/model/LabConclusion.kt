@@ -6,7 +6,6 @@ import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import ru.cobalt42.lab.model.jointtubelinepart.JointTubeConclusionType
-import ru.cobalt42.lab.model.jointtubelinepart.TargetTypeClass
 
 @Document
 class LabConclusion(
@@ -15,7 +14,6 @@ class LabConclusion(
     var _id: ObjectId = ObjectId.get(),
     var uid: String?,
     val name: String,
-    val target: TargetTypeClass,
     val type: JointTubeConclusionType,
     val data: String,
     val signers: Signers,

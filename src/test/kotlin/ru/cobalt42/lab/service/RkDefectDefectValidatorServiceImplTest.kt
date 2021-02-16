@@ -1,16 +1,12 @@
 package ru.cobalt42.lab.service
 
-import org.bson.types.ObjectId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import ru.cobalt42.lab.model.*
-import ru.cobalt42.lab.model.jointtubelinepart.JointTubeConclusionType
 import ru.cobalt42.lab.model.jointtubelinepart.JointTubeDefect
-import ru.cobalt42.lab.model.jointtubelinepart.JointTubeZone
 import ru.cobalt42.lab.model.jointtubelinepart.rk.RkDefectClass
 import ru.cobalt42.lab.model.jointtubelinepart.rk.RkDefectType
-import ru.cobalt42.lab.model.jointtubelinepart.TargetTypeClass
 import ru.cobalt42.lab.service.innerservices.DefectValidatorService
 import ru.cobalt42.lab.service.innerservices.DefectValidatorServiceImpl
 
