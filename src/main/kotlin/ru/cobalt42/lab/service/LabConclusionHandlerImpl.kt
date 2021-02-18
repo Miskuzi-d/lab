@@ -2,11 +2,11 @@ package ru.cobalt42.lab.service
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import ru.cobalt42.lab.dto.LabConclusionResponse
-import ru.cobalt42.lab.dto.ListConclusionResponse
-import ru.cobalt42.lab.mapper.LabConclusionMapper
-import ru.cobalt42.lab.model.LabConclusion
-import ru.cobalt42.lab.model.LabConclusionObject
+import ru.cobalt42.lab.dto.LabConclusionDTO
+import ru.cobalt42.lab.dto.PaginatedResponse
+import ru.cobalt42.lab.dto.mapper.LabConclusionMapper
+import ru.cobalt42.lab.model.TubeLabConclusionPath
+import ru.cobalt42.lab.model.jointtubelinepart.JointTubeOthersDefect
 import ru.cobalt42.lab.model.jointtubelinepart.JointTubeZone
 import ru.cobalt42.lab.repository.LabRepository
 import ru.cobalt42.lab.service.innerservices.RecordCompiler
@@ -29,38 +29,44 @@ class LabConclusionHandlerImpl : LabConclusionHandler {
     @Autowired
     private lateinit var labRepository: LabRepository
 
-    override fun processLabConclusion(labConclusion: LabConclusion): LabConclusionResponse {
-        labConclusion.uid = initializeUidIfBlank()
-        processConclusionByObjectType(labConclusion)
-        labRepository.save(labConclusion)
+    override fun processLabConclusion(tubeLabConclusionPath: TubeLabConclusionPath): LabConclusionDTO {
+        tubeLabConclusionPath.uid = initializeUidIfBlank()
+        processConclusionByObjectType(tubeLabConclusionPath)
+        labRepository.save(tubeLabConclusionPath)
 
-        return mapper.fromModelToDTO(labConclusion)
+        return mapper.fromModelToDTO(tubeLabConclusionPath)
     }
 
-    override fun updateLabConclusion(uid: String, labConclusion: LabConclusion): LabConclusionResponse {
-        val old: LabConclusion = labRepository.findByUid(uid)
-        labConclusion._id = old._id
-        return processLabConclusion(labConclusion)
+    override fun updateLabConclusion(uid: String, tubeLabConclusionPath: TubeLabConclusionPath): LabConclusionDTO {
+        val old: TubeLabConclusionPath = labRepository.findByUid(uid)
+        tubeLabConclusionPath._id = old._id
+        return processLabConclusion(tubeLabConclusionPath)
     }
 
-    private fun processConclusionByObjectType(labConclusion: LabConclusion) =
-    when (labConclusion.conclusionObject) {
-        is LabConclusionObject.JointTubeLinePart -> {
-            for (zone: JointTubeZone in labConclusion.conclusionObject.zones) {
-                labConclusion.conclusionObject.isGood = validator.defectsValidate(labConclusion.conclusionObject.wallThickness, zone)
-                zone.conclusionCode = recordCompiler.compile(zone)
-                if(!labConclusion.conclusionObject.isGood) labConclusion.isGood = false
+    private fun processConclusionByObjectType(tubeLabConclusionPath: TubeLabConclusionPath) {
+
+        var result = true
+
+        when (tubeLabConclusionPath.target.uname) {
+            "РК" -> {
+                for (zone: JointTubeZone in tubeLabConclusionPath.zones!!) {
+                    if (!validator.DefectsValidate(tubeLabConclusionPath.wallThickness.toDouble(), zone)) result = false
+                    zone.conclusionCode = recordCompiler.compile(zone)
+
+                }
             }
+            "ВИК" -> if (!validator.DefectsValidate(tubeLabConclusionPath.wallThickness.toDouble(), tubeLabConclusionPath.defectList!!)) result = false
         }
+        tubeLabConclusionPath.isGood = result
     }
 
     private fun initializeUidIfBlank(): String = UUID.randomUUID().toString()
 
-    override fun findByUid(uid: String): LabConclusionResponse {
+    override fun findByUid(uid: String): LabConclusionDTO {
         return mapper.fromModelToDTO(labRepository.findByUid(uid))
     }
 
-    override fun findAll(): ListConclusionResponse {
+    override fun findAll(): PaginatedResponse {
         return mapper.createListConclusionResponse(labRepository.findAll())
     }
 

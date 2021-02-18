@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import ru.cobalt42.lab.model.*
-import ru.cobalt42.lab.model.jointtubelinepart.JointTubeDefect
+import ru.cobalt42.lab.model.jointtubelinepart.JointTubeRkDefect
 import ru.cobalt42.lab.model.jointtubelinepart.rk.RkDefectClass
 import ru.cobalt42.lab.model.jointtubelinepart.rk.RkDefectType
 import ru.cobalt42.lab.service.innerservices.DefectValidatorService
@@ -22,23 +22,23 @@ internal class RkDefectDefectValidatorServiceImplTest {
     private val thicknessNegative = -5.0
     private val thicknessUpBound = 199.9
 
-    private val defectInBounds = JointTubeDefect(RkDefectType.OXIDE_INCLUSION,
+    private val defectInBounds = JointTubeRkDefect(RkDefectType.OXIDE_INCLUSION,
                                     RkDefectClass.CLASS1,0.1, 0.19, false, "", "", "", isGood = false)
-    private val defectLengthExceeds = JointTubeDefect(RkDefectType.PENETRATION_LACK,
+    private val defectLengthExceeds = JointTubeRkDefect(RkDefectType.PENETRATION_LACK,
                                     RkDefectClass.CLASS1,1.1, 1.6, false,"", "", "", isGood = false)
-    private val defectWidthExceeds = JointTubeDefect(RkDefectType.SLAG_LONG,
+    private val defectWidthExceeds = JointTubeRkDefect(RkDefectType.SLAG_LONG,
                                     RkDefectClass.CLASS2,1.1, 0.4, false,"", "", "", isGood = false)
-    private val defect4 = JointTubeDefect(RkDefectType.TUNGSTEN_LONG,
+    private val defect4 = JointTubeRkDefect(RkDefectType.TUNGSTEN_LONG,
                                     RkDefectClass.CLASS7,1.1, 1.4, false,"", "", "", isGood = false)
-    private val defect5 = JointTubeDefect(RkDefectType.PORES_INCLUSION_SPHERICAL,
+    private val defect5 = JointTubeRkDefect(RkDefectType.PORES_INCLUSION_SPHERICAL,
                                     RkDefectClass.CLASS7,5.0, 20.0, false,"", "", "", isGood = false)
-    private val defect6 = JointTubeDefect(RkDefectType.PORES_INCLUSION_SPHERICAL,
+    private val defect6 = JointTubeRkDefect(RkDefectType.PORES_INCLUSION_SPHERICAL,
                                     RkDefectClass.CLASS7,4.1, 20.1, false,"", "", "", isGood = false)
-    private val defect7 = JointTubeDefect(RkDefectType.PORES_INCLUSION_SPHERICAL,
+    private val defect7 = JointTubeRkDefect(RkDefectType.PORES_INCLUSION_SPHERICAL,
                                     RkDefectClass.CLASS7,5.1, 19.4, false,"", "", "", isGood = false)
-    private val defect8 = JointTubeDefect(RkDefectType.PORES_INCLUSION_SPHERICAL,
+    private val defect8 = JointTubeRkDefect(RkDefectType.PORES_INCLUSION_SPHERICAL,
                                     RkDefectClass.CLASS7,5.1, 20.00000001, false,"", "", "", isGood = false)
-    private val defect9 = JointTubeDefect(RkDefectType.PORES_INCLUSION_SPHERICAL,
+    private val defect9 = JointTubeRkDefect(RkDefectType.PORES_INCLUSION_SPHERICAL,
                                     RkDefectClass.CLASS7,3.1, 19.4, false,"", "", "", isGood = false)
 
     private val defectsLowBoundary = listOf(defectInBounds)
@@ -137,8 +137,8 @@ internal class RkDefectDefectValidatorServiceImplTest {
 
 //        validator.defectsValidate(thicknessUpBound, sumLengthOutOfBounds)
 
-        for (defect: JointTubeDefect in sumLengthOutOfBounds) {
-            assertEquals(PermitStatus.VERIFIED_NOT_PASS, defect.sumLengthPermit)
+        for (rkDefect: JointTubeRkDefect in sumLengthOutOfBounds) {
+            assertEquals(PermitStatus.VERIFIED_NOT_PASS, rkDefect.sumLengthPermit)
         }
     }
 

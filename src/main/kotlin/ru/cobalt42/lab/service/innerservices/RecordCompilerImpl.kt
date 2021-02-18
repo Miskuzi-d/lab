@@ -1,29 +1,38 @@
 package ru.cobalt42.lab.service.innerservices
 
 import org.springframework.stereotype.Service
-import ru.cobalt42.lab.model.jointtubelinepart.JointTubeDefect
+import ru.cobalt42.lab.model.jointtubelinepart.JointTubeOthersDefect
+import ru.cobalt42.lab.model.jointtubelinepart.JointTubeRkDefect
 import ru.cobalt42.lab.model.jointtubelinepart.JointTubeZone
 import kotlin.text.StringBuilder
 
 @Service
 class RecordCompilerImpl : RecordCompiler {
 
-    override fun compile(joinTubeZone: JointTubeZone): String {
-        val defectList = joinTubeZone.defectList
+    override fun compile(anyTubeZone: Any): String {
+
         val map = mutableMapOf<String, Int>()
         val result = StringBuilder("")
 
-        fillMapOfDefectCodes(defectList, map)
-        appendCodesAndCounts(map, result)
-        appendSumLength(defectList, result, joinTubeZone)
+        when(anyTubeZone) {
+            is JointTubeZone -> {
+                val defectList = anyTubeZone.rkDefectList
 
+                fillMapOfDefectCodes(defectList, map)
+                appendCodesAndCounts(map, result)
+                appendSumLength(defectList, result, anyTubeZone)
+            }
+            is JointTubeOthersDefect -> {
+
+            }
+        }
         return result.toString()
     }
 
-    private fun fillMapOfDefectCodes(defectList: List<JointTubeDefect>,
-                                    map: MutableMap<String, Int>) {
-        for (defect: JointTubeDefect in defectList) {
-            val record = createRecord(defect)
+    private fun fillMapOfDefectCodes(rkDefectList: List<JointTubeRkDefect>,
+                                     map: MutableMap<String, Int>) {
+        for (rkDefect: JointTubeRkDefect in rkDefectList) {
+            val record = createRecord(rkDefect)
             if (map.containsKey(record)) {
                 map[record] = map.getValue(record).inc()
             } else {
@@ -45,25 +54,25 @@ class RecordCompilerImpl : RecordCompiler {
         }
     }
 
-    private fun appendSumLength(defectList: List<JointTubeDefect>,
+    private fun appendSumLength(rkDefectList: List<JointTubeRkDefect>,
                                 result: StringBuilder,
                                 joinTubeZone: JointTubeZone) {
-        if (defectList.size > 1) {
+        if (rkDefectList.size > 1) {
             result.append("Σ ").append(joinTubeZone.sumLength)
         } else {
             result.deleteRange(result.length - 2, result.length - 1)
         }
     }
 
-    private fun createRecord(defect: JointTubeDefect): String {
-        var result = defect.defectType.codeRus
+    private fun createRecord(rkDefect: JointTubeRkDefect): String {
+        var result = rkDefect.defectType.codeRus
 
-        if (defect.length > 0 && defect.width > 0) {
-            result = result + defect.length + "x" + defect.width
-        } else if (defect.length > 0) {
-            result += defect.length
-        } else if (defect.width > 0) {
-            result += defect.width
+        if (rkDefect.length > 0 && rkDefect.width > 0) {
+            result = result + rkDefect.length + "x" + rkDefect.width
+        } else if (rkDefect.length > 0) {
+            result += rkDefect.length
+        } else if (rkDefect.width > 0) {
+            result += rkDefect.width
         } else {
             result = ""
         }

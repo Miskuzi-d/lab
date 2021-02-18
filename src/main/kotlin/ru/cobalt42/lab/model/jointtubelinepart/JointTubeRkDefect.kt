@@ -5,7 +5,7 @@ import ru.cobalt42.lab.model.PermitStatus
 import ru.cobalt42.lab.model.jointtubelinepart.rk.RkDefectClass
 import ru.cobalt42.lab.model.jointtubelinepart.rk.RkDefectType
 
-data class JointTubeDefect (
+data class JointTubeRkDefect (
     val defectType: RkDefectType,
     val defectClass: RkDefectClass,
     val width : Double = 0.0,

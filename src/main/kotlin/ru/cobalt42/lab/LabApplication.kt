@@ -8,6 +8,4 @@ class LabApplication
 
 fun main(args: Array<String>) {
 	runApplication<LabApplication>(*args)
-
-
 }

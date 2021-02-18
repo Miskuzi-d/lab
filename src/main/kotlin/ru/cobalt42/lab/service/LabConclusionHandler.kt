@@ -1,18 +1,18 @@
 package ru.cobalt42.lab.service
 
-import ru.cobalt42.lab.dto.LabConclusionResponse
-import ru.cobalt42.lab.dto.ListConclusionResponse
-import ru.cobalt42.lab.model.LabConclusion
+import ru.cobalt42.lab.dto.LabConclusionDTO
+import ru.cobalt42.lab.dto.PaginatedResponse
+import ru.cobalt42.lab.model.TubeLabConclusionPath
 
 interface LabConclusionHandler {
 
-    fun processLabConclusion(labConclusion: LabConclusion) : LabConclusionResponse
+    fun processLabConclusion(tubeLabConclusionPath: TubeLabConclusionPath) : LabConclusionDTO
 
-    fun updateLabConclusion(uid: String, labConclusion: LabConclusion) : LabConclusionResponse
+    fun updateLabConclusion(uid: String, tubeLabConclusionPath: TubeLabConclusionPath) : LabConclusionDTO
 
-    fun findByUid(uid: String): LabConclusionResponse
+    fun findByUid(uid: String): LabConclusionDTO
 
-    fun findAll(): ListConclusionResponse
+    fun findAll(): PaginatedResponse
 
     fun deleteByUid(uid: String): String
 

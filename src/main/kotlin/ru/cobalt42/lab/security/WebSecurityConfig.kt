@@ -26,13 +26,13 @@
 //
 //        // Entry points
 //        http.authorizeRequests()
-//            .antMatchers("api/lab/conclusion/**").hasRole("VerifiedToken")
+//            .antMatchers("api/lab/**").hasRole("VerifiedToken")
 //            .anyRequest().authenticated()
 //
 //        // Apply JWT
 //        http.apply(JwtFilterConfigurer(jwtProvider))
 //        http.cors()
-//        http.httpBasic()
+//        http.httpBasic().disable().formLogin().disable()
 //    }
 //
 //}
